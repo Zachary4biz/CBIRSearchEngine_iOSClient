@@ -43,6 +43,7 @@
 		118D03C01EA2291700DE7FA9 /* UIImageView+HighlightedWebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 118D03A51EA2291600DE7FA9 /* UIImageView+HighlightedWebCache.m */; };
 		118D03C11EA2291700DE7FA9 /* UIImageView+WebCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 118D03A71EA2291700DE7FA9 /* UIImageView+WebCache.m */; };
 		118D03C21EA2291700DE7FA9 /* UIView+WebCacheOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 118D03A91EA2291700DE7FA9 /* UIView+WebCacheOperation.m */; };
+		118D03C61EA22B7500DE7FA9 /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 118D03C51EA22B7500DE7FA9 /* PhotoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +142,8 @@
 		118D03A71EA2291700DE7FA9 /* UIImageView+WebCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+WebCache.m"; sourceTree = "<group>"; };
 		118D03A81EA2291700DE7FA9 /* UIView+WebCacheOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+WebCacheOperation.h"; sourceTree = "<group>"; };
 		118D03A91EA2291700DE7FA9 /* UIView+WebCacheOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+WebCacheOperation.m"; sourceTree = "<group>"; };
+		118D03C41EA22B7500DE7FA9 /* PhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		118D03C51EA22B7500DE7FA9 /* PhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -192,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				118D036E1EA2291600DE7FA9 /* Util */,
+				118D03C31EA22B3200DE7FA9 /* PhotosVC */,
 				11584A471E8801BE003A9034 /* AppDelegate.h */,
 				11584A481E8801BE003A9034 /* AppDelegate.m */,
 				11584A4A1E8801BE003A9034 /* ViewController.h */,
@@ -322,6 +326,15 @@
 				118D03A91EA2291700DE7FA9 /* UIView+WebCacheOperation.m */,
 			);
 			path = SDWebImage;
+			sourceTree = "<group>";
+		};
+		118D03C31EA22B3200DE7FA9 /* PhotosVC */ = {
+			isa = PBXGroup;
+			children = (
+				118D03C41EA22B7500DE7FA9 /* PhotoViewController.h */,
+				118D03C51EA22B7500DE7FA9 /* PhotoViewController.m */,
+			);
+			path = PhotosVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -485,6 +498,7 @@
 				118D03C01EA2291700DE7FA9 /* UIImageView+HighlightedWebCache.m in Sources */,
 				118D03B61EA2291700DE7FA9 /* SDImageCache.m in Sources */,
 				118D03BA1EA2291700DE7FA9 /* SDWebImageDownloaderOperation.m in Sources */,
+				118D03C61EA22B7500DE7FA9 /* PhotoViewController.m in Sources */,
 				118D03AC1EA2291700DE7FA9 /* MASConstraintMaker.m in Sources */,
 				11584A4C1E8801BE003A9034 /* ViewController.m in Sources */,
 				118D03BF1EA2291700DE7FA9 /* UIImage+MultiFormat.m in Sources */,

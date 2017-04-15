@@ -9,6 +9,7 @@
 #import "PhotosUtil.h"
 
 PHAssetCollection *const ZTAllAlbum;
+
 @interface PhotosUtil()<PHPhotoLibraryChangeObserver>
 @property (nonatomic, strong) PHFetchResult *userAlbums;
 @property (nonatomic, strong) PHFetchResult *smartAlbums;

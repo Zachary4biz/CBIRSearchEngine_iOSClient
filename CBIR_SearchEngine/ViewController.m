@@ -9,12 +9,17 @@
 #import "ViewController.h"
 #import "PostBodyMakerUtil.h"
 #import "PresentSimilaryImageViewController.h"
+#import "PhotoViewController.h"
+
 #import <AssetsLibrary/AssetsLibrary.h>
 @interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *searchTriggerView;
 @property (weak, nonatomic) IBOutlet UIView *searchTriggerWrapperView;
 @property (weak, nonatomic) IBOutlet UIImageView *searchView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadView;
+
+
+
 
 
 @property (nonatomic, strong) UIImagePickerController *p;
@@ -241,6 +246,12 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
 }
 - (void)tapUploadViewHandler
 {
+//    [self systemWayOfPhotos];
+    [self myWayOfPhotos];
+}
+
+- (void)systemWayOfPhotos
+{
     self.isPickerUpload = YES;
     [UIView animateWithDuration:0.1 animations:^{
         self.uploadView.transform = CGAffineTransformMakeScale(0.9, 0.9);
@@ -254,5 +265,12 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
     }];
 }
 
-
+- (void)myWayOfPhotos
+{
+    PhotoViewController *photoVC = [[PhotoViewController alloc]init];
+    [photoVC.view setFrame:self.view.bounds];
+    [self presentViewController:photoVC animated:YES completion:^{
+        //
+    }];
+}
 @end
