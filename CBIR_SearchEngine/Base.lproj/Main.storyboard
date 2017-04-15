@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchTrigger" translatesAutoresizingMaskIntoConstraints="NO" id="eAY-AY-EEX">
+                                <rect key="frame" x="138" y="284" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="Vwp-Cx-s2M"/>
+                                    <constraint firstAttribute="height" constant="100" id="Ypw-Xa-IU4"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozD-FQ-3Jh">
+                                <rect key="frame" x="0.0" y="527" width="375" height="140"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="2TG-xz-lfi">
+                                        <rect key="frame" x="50" y="30" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="80" id="MOa-2z-HGc"/>
+                                            <constraint firstAttribute="height" constant="80" id="tmv-6C-LIL"/>
+                                        </constraints>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="upload" translatesAutoresizingMaskIntoConstraints="NO" id="JIt-69-0LB">
+                                        <rect key="frame" x="245" y="30" width="80" height="80"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="80" id="Die-m0-6tJ"/>
+                                            <constraint firstAttribute="width" constant="80" id="ZaG-Si-dJf"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="140" id="G5Y-OJ-XUg"/>
+                                    <constraint firstItem="2TG-xz-lfi" firstAttribute="centerY" secondItem="ozD-FQ-3Jh" secondAttribute="centerY" id="Ibb-tB-jBf"/>
+                                    <constraint firstAttribute="trailing" secondItem="JIt-69-0LB" secondAttribute="trailing" constant="50" id="g2r-hB-omm"/>
+                                    <constraint firstItem="JIt-69-0LB" firstAttribute="centerY" secondItem="ozD-FQ-3Jh" secondAttribute="centerY" id="onU-pH-5pl"/>
+                                    <constraint firstItem="2TG-xz-lfi" firstAttribute="leading" secondItem="ozD-FQ-3Jh" secondAttribute="leading" constant="50" id="tqz-Q9-WIv"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eAY-AY-EEX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3VV-2B-L6l"/>
+                            <constraint firstItem="ozD-FQ-3Jh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="IOc-D5-hyC"/>
+                            <constraint firstAttribute="trailing" secondItem="ozD-FQ-3Jh" secondAttribute="trailing" id="Lhf-O0-WiL"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ozD-FQ-3Jh" secondAttribute="bottom" id="MiZ-t1-OkE"/>
+                            <constraint firstItem="eAY-AY-EEX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xj2-Zh-XI0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="searchTriggerView" destination="eAY-AY-EEX" id="Cgu-BN-dwD"/>
+                        <outlet property="searchTriggerWrapperView" destination="ozD-FQ-3Jh" id="qSN-ia-0rw"/>
+                        <outlet property="searchView" destination="2TG-xz-lfi" id="g5S-z7-1GY"/>
+                        <outlet property="uploadView" destination="JIt-69-0LB" id="2az-V6-EGc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="69.599999999999994" y="43.628185907046479"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="search" width="783" height="783"/>
+        <image name="searchTrigger" width="512" height="512"/>
+        <image name="upload" width="528" height="528"/>
+    </resources>
+</document>
