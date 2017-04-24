@@ -27,7 +27,7 @@
 
 @property (nonatomic, strong) NSURL *uploadURL;
 @property (nonatomic, strong) NSURL *searchURL;
-@property (nonatomic, strong) PresentSimilaryImageViewController *presentVC;
+
 /**
  保存有服务器返回的结果，之后会遍历处理成完整的URL 的string
  */
@@ -62,13 +62,6 @@ static NSString *serverStr = @"http://192.168.221.54:5000/";
     }
     return _searchResultArr;
 }
-- (PresentSimilaryImageViewController *)presentVC
-{
-    if(!_presentVC){
-        _presentVC = [[PresentSimilaryImageViewController alloc]init];
-    }
-    return _presentVC;
-}
 
 
 #pragma mark - lifecycle
@@ -78,8 +71,8 @@ static NSString *serverStr = @"http://192.168.221.54:5000/";
     self.searchTriggerView.userInteractionEnabled = YES;
     self.searchView.userInteractionEnabled = YES;
     self.uploadView.userInteractionEnabled = YES;
-    self.searchTriggerWrapperView.transform = CGAffineTransformMakeTranslation(0, self.searchTriggerWrapperView.frame.size.height);
-    
+
+    //添加一堆手势
     UITapGestureRecognizer *tapTriggerView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapTriggerViewHandler)];
     [self.searchTriggerView addGestureRecognizer:tapTriggerView];
     
@@ -89,12 +82,28 @@ static NSString *serverStr = @"http://192.168.221.54:5000/";
     UITapGestureRecognizer *tapUploadView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapUploadViewHandler)];
     [self.uploadView addGestureRecognizer:tapUploadView];
     
+    //wrapperV 添加阴影、圆角
+    self.searchTriggerWrapperView.layer.cornerRadius = 5.0;
+    self.searchTriggerWrapperView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.searchTriggerWrapperView.layer.shadowOffset = CGSizeMake(0, 3);
+    self.searchTriggerWrapperView.layer.shadowRadius = 8.0;
+    self.searchTriggerWrapperView.layer.shadowOpacity = 0.8;
     
+    //给self.view添加一个手势，因为使用CASpring的Layer动画后，下面的imgV的真实frame没有变
+    //导致那两个imgV不能响应手势了
+    UITapGestureRecognizer *tapSenderGes = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapSenderGes:)];
+    [self.view addGestureRecognizer:tapSenderGes];
+    
+    //需要一个pan手势，和点击trigger一样的效果
+    UIPanGestureRecognizer *panGes = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(pan:)];
+    [self.view addGestureRecognizer:panGes];
 }
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
+
 //上传相册作为搜索源
 - (void)setSelectedAlbumArr:(NSMutableArray *)selectedAlbumArr
 {
@@ -114,6 +123,7 @@ static NSString *serverStr = @"http://192.168.221.54:5000/";
         [self searchImage:result andName:[selectedAsset valueForKey:@"filename"]];
     }];
 }
+
 
 #pragma mark - upload
 //上传相册
@@ -225,24 +235,77 @@ PHAsset *asset = nil;
     [self presentViewController:presentVC animated:YES completion:nil];
 }
 #pragma mark - GestureHandler
+//为了使用CASpring动画后还能响应，就给self.view加了个tap，通过区域判断响应哪一个view
+//通过wrapperV的presentationLayer来判断需不需响应
+- (void)tapSenderGes:(UITapGestureRecognizer *)tap
+{
+    CGPoint tapP = [tap locationInView:self.view];
+    if ([self.searchTriggerWrapperView.layer.presentationLayer hitTest:tapP]) {
+        if (CGRectGetMinX(self.searchView.frame)<tapP.x&&tapP.x<CGRectGetMaxX(self.searchView.frame)) {
+            [self tapSearchViewHandler];
+        }else if (CGRectGetMinX(self.uploadView.frame)<tapP.x&&tapP.x<CGRectGetMaxX(self.uploadView.frame)){
+            [self tapUploadViewHandler];
+        }
+    }
+}
+//在self.view上，向上pan能够触发wrapperV显示，向下pan能够触发wrapperV隐藏
+CGPoint beginP;
+BOOL isPanGesAnimating;
+- (void)pan:(UIPanGestureRecognizer *)pan
+{
+    switch (pan.state) {
+        case UIGestureRecognizerStateBegan:
+            beginP = [pan locationInView:self.view];
+//            NSLog(@"开始的是%f",beginP.y);
+            break;
+        case UIGestureRecognizerStateChanged:
+        {
+            CGPoint curP = [pan locationInView:self.view];
+            if (!isPanGesAnimating) {
+                //如果没有在进行动画，就根据位移做动画
+                if ((curP.y-beginP.y)>50) {
+                    NSLog(@"下滑");
+                    isPanGesAnimating = YES;
+                    [self hideWrapperV];
+                }else if ((curP.y-beginP.y)<-50){
+                    NSLog(@"上滑");
+                    [self showWrapperV];
+                    isPanGesAnimating = YES;
+                }
+            }
+            break;
+        }
+        case UIGestureRecognizerStateEnded:
+            isPanGesAnimating = NO;
+            break;
+        default:
+            break;
+    }
+}
+
 - (void)tapTriggerViewHandler
 {
-    if (!CGAffineTransformIsIdentity(self.searchTriggerWrapperView.transform)) {
+    //按钮点按反馈
+    [UIView animateWithDuration:0.1 animations:^{
+        self.searchTriggerView.transform = CGAffineTransformMakeScale(0.9, 0.9);
+    }completion:^(BOOL finished) {
         [UIView animateWithDuration:0.1 animations:^{
-            self.searchTriggerView.transform = CGAffineTransformMakeScale(0.9, 0.9);
-        }completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.1 animations:^{
-                self.searchTriggerView.transform = CGAffineTransformIdentity;
-            }];
+            self.searchTriggerView.transform = CGAffineTransformIdentity;
         }];
-        [UIView animateWithDuration:0.2 animations:^{
-            self.searchTriggerWrapperView.transform = CGAffineTransformIdentity;
-        }];
+    }];
+    //动画改变的东西都在presentationLayer上，而直接用属性取得到的其实是modelLayer
+    //所以可以理解为,pLayer就是改变后的，mLayer就是类似CGAffineTransformIdentity
+    CALayer *pLayer = [self.searchTriggerWrapperView.layer presentationLayer];
+    CALayer *mLayer = [self.searchTriggerWrapperView.layer modelLayer];
+    
+    if (pLayer.position.y==mLayer.position.y) {
+        //弹出
+        [self showWrapperV];
     }else{
-        [UIView animateWithDuration:0.2 animations:^{
-            self.searchTriggerWrapperView.transform = CGAffineTransformMakeTranslation(0, self.searchTriggerWrapperView.frame.size.height);
-        }];
+        //收回
+        [self hideWrapperV];
     }
+    
 }
 - (void)tapSearchViewHandler
 {
@@ -276,5 +339,42 @@ PHAsset *asset = nil;
     }];
 }
 
+#pragma mark - 效果
+- (void)showWrapperV
+{
+    //弹出前要移除之前的动画
+    [self.searchTriggerWrapperView.layer removeAnimationForKey:@"hide"];
+    CASpringAnimation *animation = [CASpringAnimation animationWithKeyPath:@"position.y"];
+    //这里这样设置的效果是中心点就在view的最底下，也就是只显示一半的wrapperV，
+    //我把WrapperV的控件都放在了上半部分，下半部分是空的，为了让Spring动画更好看
+    CGFloat newPositionY = self.view.frame.size.height;
+    animation.fromValue = @(self.searchTriggerWrapperView.layer.position.y);
+    animation.toValue = @(newPositionY);
+    //惯性质量，越大运动得越远
+    animation.mass = 1;
+    //阻力，越大停止越快
+    animation.damping = 15;
+    //初始速率，
+    animation.initialVelocity = 0;
+    //刚度，越大形变越快
+    animation.stiffness = 400;
+    //持续时间，使用settlingDuration可以让动画完整播放，自己设时间会出问题
+    animation.duration = animation.settlingDuration;
+    
+    animation.removedOnCompletion = NO;
+    animation.fillMode = kCAFillModeForwards;
+    [self.searchTriggerWrapperView.layer addAnimation:animation forKey:@"show"];
+}
+- (void)hideWrapperV
+{
+    CALayer *mLayer = [self.searchTriggerWrapperView.layer modelLayer];
+    [self.searchTriggerWrapperView.layer removeAnimationForKey:@"show"];
+    CABasicAnimation *ani = [CABasicAnimation animationWithKeyPath:@"position.y"];
+    ani.toValue = @(mLayer.position.y);
+    ani.duration = 0.3;
+    ani.removedOnCompletion = NO;
+    ani.fillMode = kCAFillModeForwards;
+    [self.searchTriggerWrapperView.layer addAnimation:ani forKey:@"hide"];
+}
 
 @end

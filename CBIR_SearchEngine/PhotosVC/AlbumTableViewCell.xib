@@ -37,16 +37,21 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="selected" translatesAutoresizingMaskIntoConstraints="NO" id="f5e-cu-O6E">
-                        <rect key="frame" x="359" y="16" width="20" height="20"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selected" translatesAutoresizingMaskIntoConstraints="NO" id="f5e-cu-O6E">
+                        <rect key="frame" x="359" y="26" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="8wd-Oi-hp6"/>
+                            <constraint firstAttribute="width" constant="20" id="plD-zV-YL8"/>
+                        </constraints>
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="f5e-cu-O6E" firstAttribute="top" secondItem="Ps9-IO-r7v" secondAttribute="top" id="Bd5-r3-jf7"/>
                     <constraint firstItem="TZ6-eB-3iy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CZB-nz-MXR"/>
                     <constraint firstItem="jS4-Iz-Icq" firstAttribute="leading" secondItem="TZ6-eB-3iy" secondAttribute="trailing" constant="8" id="KvS-uR-9nn"/>
                     <constraint firstItem="jS4-Iz-Icq" firstAttribute="top" secondItem="Ps9-IO-r7v" secondAttribute="bottom" constant="8.5" id="QQA-Kb-moX"/>
                     <constraint firstItem="TZ6-eB-3iy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="aeg-8Q-Cpe"/>
+                    <constraint firstAttribute="trailing" secondItem="f5e-cu-O6E" secondAttribute="trailing" constant="8" id="kc7-Ws-drI"/>
                     <constraint firstItem="Ps9-IO-r7v" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="26" id="lei-cj-pM2"/>
                     <constraint firstItem="Ps9-IO-r7v" firstAttribute="leading" secondItem="TZ6-eB-3iy" secondAttribute="trailing" constant="8" id="w6O-2U-MSw"/>
                 </constraints>
