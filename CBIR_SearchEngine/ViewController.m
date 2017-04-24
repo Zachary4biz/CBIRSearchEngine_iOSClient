@@ -10,6 +10,7 @@
 #import "PostBodyMakerUtil.h"
 #import "PresentSimilaryImageViewController.h"
 #import "PhotoViewController.h"
+#import "AlbumTableViewController.h"
 
 #import <AssetsLibrary/AssetsLibrary.h>
 @interface ViewController ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>
@@ -17,12 +18,11 @@
 @property (weak, nonatomic) IBOutlet UIView *searchTriggerWrapperView;
 @property (weak, nonatomic) IBOutlet UIImageView *searchView;
 @property (weak, nonatomic) IBOutlet UIImageView *uploadView;
+@property (weak, nonatomic) IBOutlet UIProgressView *progressV;
 
 
 
-
-
-@property (nonatomic, strong) UIImagePickerController *p;
+//@property (nonatomic, strong) UIImagePickerController *p;
 @property (nonatomic, assign) BOOL isPickerUpload;
 
 @property (nonatomic, strong) NSURL *uploadURL;
@@ -36,10 +36,11 @@
 
 @end
 
-//static NSString *serverStr = @"http://192.168.220.153:5000/";
-static NSString *serverStr = @"http://0.0.0.0:5000/";
+static NSString *serverStr = @"http://192.168.221.54:5000/";
+//static NSString *serverStr = @"http://0.0.0.0:5000/";
 
 @implementation ViewController
+#pragma mark - lazy
 - (NSURL *)uploadURL
 {
     if(!_uploadURL){
@@ -69,8 +70,11 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
     return _presentVC;
 }
 
+
+#pragma mark - lifecycle
 - (void)viewDidLoad {
     [super viewDidLoad];
+    _selectedAlbumArr = [NSMutableArray new];
     self.searchTriggerView.userInteractionEnabled = YES;
     self.searchView.userInteractionEnabled = YES;
     self.uploadView.userInteractionEnabled = YES;
@@ -85,22 +89,76 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
     UITapGestureRecognizer *tapUploadView = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapUploadViewHandler)];
     [self.uploadView addGestureRecognizer:tapUploadView];
     
-    _p = [[UIImagePickerController alloc]init];
-    _p.delegate = self;
-
+    
 }
-
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 
 }
+//上传相册作为搜索源
+- (void)setSelectedAlbumArr:(NSMutableArray *)selectedAlbumArr
+{
+    _selectedAlbumArr = selectedAlbumArr;
+    [self uploadSelectedAlbum];
+}
+//上传图片作为搜索目标
+- (void)setSelectedImg:(UIImage *)selectedImg
+{
+    _selectedImg = selectedImg;
+//    [self searchImage:selectedImg andName:selectedImg.name];
+    
+}
+- (void)setSelectedAsset:(PHAsset *)selectedAsset
+{
+    [PhotosUtil decodeAsset:selectedAsset complition:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        [self searchImage:result andName:[selectedAsset valueForKey:@"filename"]];
+    }];
+}
+
 #pragma mark - upload
-- (void)uploadImage:(UIImage *)img andName:(NSString *)name
+//上传相册
+- (void)uploadSelectedAlbum
+{
+    NSMutableArray *ar = [NSMutableArray new];
+    for (int i=0; i<self.selectedAlbumArr.count; i++) {
+        PHAssetCollection *assetCollection = self.selectedAlbumArr[i];
+        [ar addObjectsFromArray:[PhotosUtil getAssetsInAssetCollection:assetCollection ascending:YES]];
+    }
+    self.assetArr4Upload = [NSMutableArray arrayWithArray:ar];
+    [self.progressV setProgress:0 animated:nil];
+    self.progressV.alpha = 1.0;
+    [self uploadAssetAtIndex:ar.count-1];
+    NSLog(@"将上传%ld",ar.count);
+}
+PHAsset *asset = nil;
+- (void)uploadAssetAtIndex:(NSInteger)index
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.progressV setProgress:((self.assetArr4Upload.count-index)*1.0/self.assetArr4Upload.count) animated:NO];
+        if (self.progressV.progress >0.99) {
+            [UIView animateWithDuration:0.3 animations:^{
+                self.progressV.alpha = 0;
+            }];
+        }
+    });
+    if (index<0) {
+        NSLog(@"上传完成");
+        return;
+    }
+        asset = self.assetArr4Upload[index];
+    [PhotosUtil decodeAsset:asset complition:^(UIImage * _Nullable result, NSDictionary * _Nullable info) {
+        NSString *name = [asset valueForKey:@"filename"];
+        [self uploadImage:result andName:name complition:^(BOOL suc) {
+            [self uploadAssetAtIndex:index-1];
+            
+        }];
+    }];
+}
+- (void)uploadImage:(UIImage *)img andName:(NSString *)name complition:(void(^)(BOOL suc))complition
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.uploadURL];
     request.HTTPMethod = @"POST";
-    request.timeoutInterval = 3.0;
+    request.timeoutInterval = 7.0;
     
     PostMakerParams *p = [[PostMakerParams alloc]initWithData:UIImageJPEGRepresentation(img,0.5) name:@"image" fileName:name ContentType:@"image/jpeg"];
     [PostBodyMakerUtil makeBodyOfRequest:request andParams:p];
@@ -111,8 +169,10 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
                                                                                   NSError * _Nullable error) {
                                                                   if (error) {
                                                                       NSLog(@"%@",error);
+                                                                      complition(NO);
                                                                   }else{
-                                                                      NSLog(@"上传成功");
+//                                                                      NSLog(@"上传成功");
+                                                                      complition(YES);
                                                                   }
                                                               }];
     [t resume];
@@ -123,10 +183,11 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
 {
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:self.searchURL];
     request.HTTPMethod = @"POST";
-    request.timeoutInterval = 3.0;
+    request.timeoutInterval = 7.0;
     
     PostMakerParams *p = [[PostMakerParams alloc]initWithData:UIImageJPEGRepresentation(img,0.5) name:@"image" fileName:name ContentType:@"image/jpeg"];
     [PostBodyMakerUtil makeBodyOfRequest:request andParams:p];
+    
     
     NSURLSessionDataTask *t = [[NSURLSession sharedSession] dataTaskWithRequest:request
                                                               completionHandler:^(NSData * _Nullable data,
@@ -143,11 +204,10 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
                                                                       NSLog(@"查询结果--\n  %@",arrFromServer);
                                                                       if (jsonEr) {
                                                                           NSLog(@"jsonEr %@",jsonEr);
-                                                                      }else{
-                                                                          dispatch_async(dispatch_get_main_queue(), ^{
-                                                                              [self showPresentVCWithArr:arrFromServer];
-                                                                          });
                                                                       }
+                                                                      dispatch_async(dispatch_get_main_queue(), ^{
+                                                                          [self showPresentVCWithArr:arrFromServer];
+                                                                      });
                                                                   }
                                                               }];
     [t resume];
@@ -156,59 +216,13 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
 - (void)showPresentVCWithArr:(NSArray *)arrFromServer
 {
     self.searchResultArr = [arrFromServer mutableCopy];
-    self.presentVC.resultArr = [NSMutableArray array];
+    PresentSimilaryImageViewController *presentVC = [[PresentSimilaryImageViewController alloc]init];
+    presentVC.resultArr = [NSMutableArray array];
     //遍历，加上服务器的域名
     [self.searchResultArr enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        [self.presentVC.resultArr addObject:[serverStr stringByAppendingString:obj]];
+        [presentVC.resultArr addObject:[serverStr stringByAppendingString:obj]];
     }];
-    [self presentViewController:self.presentVC animated:YES completion:nil];
-}
-#pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
-{
-    UIImage *img4upload = [UIImage new];
-    UIImage *originalIMG = info[@"UIImagePickerControllerOriginalImage"];
-    UIImage *editedIMG = info[@"UIImagePickerControllerEditedImage"];
-    if (editedIMG) {
-        img4upload = editedIMG;
-    }else{
-        img4upload = originalIMG;
-    }
-    NSURL *url = info[@"UIImagePickerControllerReferenceURL"];
-    NSLog(@"%@",url.lastPathComponent);
-    
-    //获取一下文件名,然后上传到服务器
-    [self getFileNameWithInfoDic:info complition:^(NSString *filename) {
-        if (self.isPickerUpload) {
-            [self uploadImage:img4upload
-                      andName:filename];
-        }else{
-            [self searchImage:img4upload
-                      andName:filename];
-        }
-    }];
-    [picker dismissViewControllerAnimated:YES completion:nil];
-}
-#pragma mark 获取某个图片的名称
-- (void)getFileNameWithInfoDic:(NSDictionary *)info complition:(void (^)(NSString *filename))complition
-{
-    NSURL *imageURL = [info valueForKey:UIImagePickerControllerReferenceURL];
-    ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
-    {
-        ALAssetRepresentation *representation = [myasset defaultRepresentation];
-        NSString *fileName = [representation filename];
-        complition(fileName);
-    };
-    
-    ALAssetsLibrary *assetslibrary = [[ALAssetsLibrary alloc] init];
-    [assetslibrary assetForURL:imageURL
-                   resultBlock:resultblock
-                  failureBlock:nil];
+    [self presentViewController:presentVC animated:YES completion:nil];
 }
 #pragma mark - GestureHandler
 - (void)tapTriggerViewHandler
@@ -240,19 +254,14 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
             self.searchView.transform = CGAffineTransformIdentity;
         }];
     }];
-    [self presentViewController:_p animated:YES completion:^{
-        self.searchTriggerWrapperView.transform = CGAffineTransformMakeTranslation(0, self.searchTriggerWrapperView.frame.size.height);
+    
+    AlbumTableViewController *albumVC = [[AlbumTableViewController alloc]initWithType:ChosePhoto];
+    [self presentViewController:albumVC animated:YES completion:^{
+        
     }];
 }
 - (void)tapUploadViewHandler
 {
-//    [self systemWayOfPhotos];
-    [self myWayOfPhotos];
-}
-
-- (void)systemWayOfPhotos
-{
-    self.isPickerUpload = YES;
     [UIView animateWithDuration:0.1 animations:^{
         self.uploadView.transform = CGAffineTransformMakeScale(0.9, 0.9);
     }completion:^(BOOL finished) {
@@ -260,17 +269,12 @@ static NSString *serverStr = @"http://0.0.0.0:5000/";
             self.uploadView.transform = CGAffineTransformIdentity;
         }];
     }];
-    [self presentViewController:_p animated:YES completion:^{
-        self.searchTriggerWrapperView.transform = CGAffineTransformMakeTranslation(0, self.searchTriggerWrapperView.frame.size.height);
+    
+    AlbumTableViewController *albumVC = [[AlbumTableViewController alloc]initWithType:ChoseAlbum];
+    [self presentViewController:albumVC animated:YES completion:^{
+        
     }];
 }
 
-- (void)myWayOfPhotos
-{
-    PhotoViewController *photoVC = [[PhotoViewController alloc]init];
-    [photoVC.view setFrame:self.view.bounds];
-    [self presentViewController:photoVC animated:YES completion:^{
-        //
-    }];
-}
+
 @end

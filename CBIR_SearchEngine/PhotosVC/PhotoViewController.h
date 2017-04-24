@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "PhotosUtil.h"
 @interface PhotoViewController : UIViewController
-
+@property (nonatomic, strong) PHAssetCollection *album;
+- (instancetype)initWithAlbum:(PHAssetCollection *)album;
 @end

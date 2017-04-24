@@ -23,9 +23,9 @@ PHAssetCollection *const ZTAllAlbum;
     PHAuthorizationStatus status = [PHPhotoLibrary authorizationStatus];
     if (status == PHAuthorizationStatusRestricted ||
         status == PHAuthorizationStatusDenied) {
-        NSLog(@"没有访问权限");
+//        NSLog(@"没有访问权限");
     }else{
-        NSLog(@"有访问权限");
+//        NSLog(@"有访问权限");
         //实时监听相册内部图片变化，需要注册代理
         [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:self];
         
@@ -34,8 +34,8 @@ PHAssetCollection *const ZTAllAlbum;
         
         
         //获取所有照片资源
-        self.assetArr = [self getAssetsInAssetCollection:ZTAllAlbum ascending:YES];
-        NSLog(@"所有照片一共有 %ld 张",self.assetArr.count);
+        self.assetArr = [PhotosUtil getAssetsInAssetCollection:ZTAllAlbum ascending:YES];
+//        NSLog(@"所有照片一共有 %ld 张",self.assetArr.count);
         
     }
 }
@@ -44,44 +44,56 @@ PHAssetCollection *const ZTAllAlbum;
 //准备好所有的相册
 - (void)prepareAllAlbum
 {
-    self.userAlbums = [self prepareUserAlbums];
-    self.smartAlbums = [self prepareSmartAlbums];
+//    PHFetchResult *userAlbums = [[self class] prepareUserAlbums];
+//    PHFetchResult *smartAlbums = [[self class] prepareSmartAlbums];
+//    
 }
 
 //获取用户自定义相册
-- (PHFetchResult *)prepareUserAlbums
++ (NSMutableArray<PHAssetCollection*> *)prepareUserAlbums
 {
+    NSMutableArray *userAlbumArr = [NSMutableArray new];
     PHFetchResult *userAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeAlbum
                                                                          subtype:PHAssetCollectionSubtypeSmartAlbumUserLibrary
                                                                          options:nil];
-    NSLog(@">>>>>用户自定义相册一共有 %ld 个",userAlbums.count);
+//    NSLog(@">>>>>用户自定义相册一共有 %ld 个",userAlbums.count);
     [userAlbums enumerateObjectsUsingBlock:^(PHAssetCollection * _Nonnull collection, NSUInteger idx, BOOL * _Nonnull stop) {
-        NSLog(@"相册名字:%@", collection.localizedTitle);
+//        NSLog(@"相册名字:%@", collection.localizedTitle);
+        [userAlbumArr addObject:collection];
     }];
     
-    return userAlbums;
+    return userAlbumArr;
 }
-
+#warning 如果相册太多，可能出现内存吃紧，应该不会，每个PHAssetCollection对象都很小
 //获取智能相册
-- (PHFetchResult *)prepareSmartAlbums
++ (NSMutableArray<PHAssetCollection*> *)prepareSmartAlbums
 {
+    NSMutableArray *smartAlbumArr = [NSMutableArray new];
     PHFetchResult *smartAlbums = [PHAssetCollection fetchAssetCollectionsWithType:PHAssetCollectionTypeSmartAlbum
                                                                           subtype:PHAssetCollectionSubtypeAlbumRegular
                                                                           options:nil];
     
-    NSLog(@">>>>>智能相册一共有 %ld 个",smartAlbums.count);
+//    NSLog(@">>>>>智能相册一共有 %ld 个",smartAlbums.count);
     [smartAlbums enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx,BOOL *stop) {
         PHAssetCollection *collection = (PHAssetCollection*)obj;
-        NSLog(@"相册名字:%@", collection.localizedTitle);
+//        NSLog(@"相册名字:%@", collection.localizedTitle);
+        [smartAlbumArr addObject:collection];
     }];
     
-    return smartAlbums;
+    return smartAlbumArr;
 }
 
-
++ (void)fetchThumbOfAlbum:(PHAssetCollection *)album size:(CGSize)size complition:(void (^)(UIImage * _Nullable result, NSDictionary * _Nullable info))complitionBlock
+{
+    PHFetchResult *r = [PHAsset fetchKeyAssetsInAssetCollection:album options:nil];
+    [r enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        PHAsset *as = (PHAsset*)obj;
+        [PhotosUtil decodeAsset:as size:size complition:complitionBlock];
+    }];
+}
 #pragma mark - 获取 指定/全部 相册内 PHAsset(图片)
 
-- (NSArray<PHAsset *> *)getAssetsInAssetCollection:(PHAssetCollection *)assetCollection ascending:(BOOL)ascending
++ (NSArray<PHAsset *> *)getAssetsInAssetCollection:(PHAssetCollection *)assetCollection ascending:(BOOL)ascending
 {
     NSMutableArray<PHAsset *> *assetArr = [NSMutableArray array];
     
@@ -109,13 +121,13 @@ PHAssetCollection *const ZTAllAlbum;
 
 #pragma mark - 根据PHAsset对象，解析图片
 //默认按照图像原尺寸获得image
-- (void)dealwithAsset:(PHAsset *)asset complition:(void (^)(UIImage *__nullable result, NSDictionary *__nullable info))complitionBlock
++ (void)decodeAsset:(PHAsset *)asset complition:(void (^)(UIImage *__nullable result, NSDictionary *__nullable info))complitionBlock
 {
-    [self dealWithAsset:asset size:PHImageManagerMaximumSize complition:complitionBlock];
+    [[self class] decodeAsset:asset size:PHImageManagerMaximumSize complition:complitionBlock];
     
 }
 //自定义获取图像的尺寸
-- (void)dealWithAsset:(PHAsset *)asset size:(CGSize)size complition:(void (^)(UIImage *__nullable result, NSDictionary *__nullable info))complitionBlock
++ (void)decodeAsset:(PHAsset *)asset size:(CGSize)size complition:(void (^)(UIImage *__nullable result, NSDictionary *__nullable info))complitionBlock
 {
     /**
      * option.resizeMode选项如下：
@@ -158,14 +170,14 @@ PHAssetCollection *const ZTAllAlbum;
 }
 
 //智能相册相册名字对应的中文
-- (NSString *)transformAblumTitle:(NSString *)title
++ (NSString *)transformAblumTitle:(NSString *)title
 {
     if ([title isEqualToString:@"Slo-mo"]) {
         return @"慢动作";
     } else if ([title isEqualToString:@"Recently Added"]) {
         return @"最近添加";
     } else if ([title isEqualToString:@"Favorites"]) {
-        return @"最爱";
+        return @"收藏";
     } else if ([title isEqualToString:@"Recently Deleted"]) {
         return @"最近删除";
     } else if ([title isEqualToString:@"Videos"]) {
@@ -178,6 +190,10 @@ PHAssetCollection *const ZTAllAlbum;
         return @"屏幕快照";
     } else if ([title isEqualToString:@"Camera Roll"]) {
         return @"相机胶卷";
+    }else if ([title isEqualToString:@"Panoramas"]) {
+        return @"全景图";
+    }else{
+        return title;
     }
     return nil;
 }

@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UICollectionViewLayout *layout;
 
 @property (nonatomic, strong) UIImageView *tempTriggerView;
+@property (nonatomic, strong) UIImageView *BGIV;
+
 @end
 
 @implementation PresentSimilaryImageViewController
@@ -22,58 +24,94 @@
 static NSString *cellID = @"cellID";
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.tempTriggerView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"searchTrigger"]];
+    
+    [self prepareView];
+    [self prepareLayout];
+    
+    
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+- (UIStatusBarStyle)preferredStatusBarStyle
+{
+    return UIStatusBarStyleLightContent;
+}
+- (void)prepareView
+{
+//BGI
+    self.BGIV = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"BGI4"]];
+    [self.view addSubview:self.BGIV];
+    
+    UIVisualEffectView *v = [[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleDark]];
+    [self.BGIV addSubview:v];
+    [v mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.BGIV);
+    }];
+    
+//tempTriggerView
+    self.tempTriggerView = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"searchTrigger_white"]];
     [self.view addSubview:self.tempTriggerView];
+    self.tempTriggerView.userInteractionEnabled = YES;
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap)];
+    [self.tempTriggerView addGestureRecognizer:tap];
+    
+    
+//collectionView
+    self.layout = [[UICollectionViewFlowLayout alloc]init];
+    self.collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:self.layout];
+    [self.collectionView registerClass:[PresentSimilaryImageCollectionViewCell class] forCellWithReuseIdentifier:cellID];
+    self.collectionView.delegate = self;
+    self.collectionView.dataSource = self;
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    [self.view addSubview:self.collectionView];
+    
+
+    
+}
+- (void)prepareLayout
+{
+    [self.BGIV mas_makeConstraints:^(MASConstraintMaker *make) {
+        make.edges.equalTo(self.view);
+    }];
+    
     [self.tempTriggerView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(20);
+        make.bottom.equalTo(self.view.mas_bottom).offset(2);
         make.centerX.equalTo(self.view.mas_centerX);
         make.width.mas_equalTo(50);
         make.height.mas_equalTo(50);
     }];
-    self.tempTriggerView.userInteractionEnabled = YES;
-    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tap)];
-    [self.tempTriggerView addGestureRecognizer:tap];
-
     
-    
-    self.layout = [[UICollectionViewFlowLayout alloc]init];
-    self.collectionView = [[UICollectionView alloc]initWithFrame:self.view.bounds collectionViewLayout:self.layout];
-    
-    [self.collectionView registerClass:[PresentSimilaryImageCollectionViewCell class] forCellWithReuseIdentifier:cellID];
-    self.collectionView.delegate = self;
-    self.collectionView.dataSource = self;
-    [self.view addSubview:self.collectionView];
     [self.collectionView mas_makeConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self.view.mas_top).offset(80);
-        make.bottom.equalTo(self.view.mas_bottom);
+        make.top.equalTo(self.view.mas_top).offset(20);
+        make.bottom.equalTo(self.tempTriggerView.mas_top).offset(-8);
         make.left.equalTo(self.view.mas_left);
         make.right.equalTo(self.view.mas_right);
     }];
     
     
-    self.view.backgroundColor = [UIColor whiteColor];
+  
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     
 }
 - (void)tap{
-    [UIView animateWithDuration:0.3 animations:^{
-        self.tempTriggerView.bounds = CGRectMake(0, 0, 100, 100);
-        self.tempTriggerView.center = self.view.center;
-        self.collectionView.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height - self.collectionView.frame.origin.y);
-    }completion:^(BOOL finished) {
-        [self dismissViewControllerAnimated:NO completion:^{
-            self.collectionView.transform = CGAffineTransformIdentity;
-            [self.tempTriggerView mas_makeConstraints:^(MASConstraintMaker *make) {
-                make.top.equalTo(self.view.mas_top).offset(20);
-                make.centerX.equalTo(self.view.mas_centerX);
-                make.width.mas_equalTo(50);
-                make.height.mas_equalTo(50);
-            }];
-        }];
-    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    //动画有点问题
+//    [UIView animateWithDuration:0.3 animations:^{
+//        self.tempTriggerView.bounds = CGRectMake(0, 0, 100, 100);
+//        self.tempTriggerView.center = self.view.center;
+//        self.collectionView.transform = CGAffineTransformMakeTranslation(0, self.view.frame.size.height - self.collectionView.frame.origin.y);
+//    }completion:^(BOOL finished) {
+//        [self dismissViewControllerAnimated:NO completion:^{
+//            self.collectionView.transform = CGAffineTransformIdentity;
+//            [self.tempTriggerView mas_makeConstraints:^(MASConstraintMaker *make) {
+//                make.top.equalTo(self.view.mas_top).offset(20);
+//                make.centerX.equalTo(self.view.mas_centerX);
+//                make.width.mas_equalTo(50);
+//                make.height.mas_equalTo(50);
+//            }];
+//        }];
+//    }];
 }
 #pragma mark UICollectionViewDataSource
 -(NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
@@ -108,5 +146,6 @@ static NSString *cellID = @"cellID";
     NSLog(@"presentSimilaryVC dealloc");
 }
 
+#pragma mark - 特殊效果
 
 @end

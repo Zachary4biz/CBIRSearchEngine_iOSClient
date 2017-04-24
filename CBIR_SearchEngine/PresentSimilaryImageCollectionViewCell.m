@@ -20,13 +20,18 @@
 //    self.imgV.image = img;
 //}
 
-//prepareForReuse是为复用准备的，也就是说初次加载，没有复用时不会进入这个
+//prepareForReuse是为复用准备的，也就是说初次加载，没有复用时不会进入prepareForReuse
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self =[super initWithFrame:frame]) {
         _imgV = [[UIImageView alloc]initWithFrame:self.bounds];
         _imgV.image = [UIImage imageNamed:@"searchTrigger"];
         [self addSubview:_imgV];
+        
+        self.layer.cornerRadius = 5.0;
+        self.layer.borderWidth = 0.9;
+        self.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.clipsToBounds = YES;
     }
     return self;
 }
