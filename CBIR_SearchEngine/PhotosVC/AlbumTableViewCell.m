@@ -9,10 +9,11 @@
 #import "AlbumTableViewCell.h"
 
 @interface AlbumTableViewCell ()
-@property (weak, nonatomic) IBOutlet UIImageView *imgV;
+
 @property (weak, nonatomic) IBOutlet UILabel *countLbl;
 @property (weak, nonatomic) IBOutlet UILabel *nameLbl;
 @property (weak, nonatomic) IBOutlet UIImageView *selectedV;
+
 
 @end
 @implementation AlbumTableViewCell
@@ -28,6 +29,8 @@
     [super awakeFromNib];
     // Initialization code
 //    self.imgV.contentMode = UIViewContentModeScaleAspectFit
+    
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {

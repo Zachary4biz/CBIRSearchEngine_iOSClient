@@ -18,12 +18,25 @@
                 <rect key="frame" x="0.0" y="0.0" width="387" height="131.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tmp" translatesAutoresizingMaskIntoConstraints="NO" id="BUA-1g-1AQ" userLabel="ImgVBGV">
+                        <rect key="frame" x="8" y="16" width="100" height="100"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TZ6-eB-3iy">
                         <rect key="frame" x="8" y="16" width="100" height="100"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="100" id="2ad-QZ-1fS"/>
                             <constraint firstAttribute="width" constant="100" id="sBI-k0-pg3"/>
                         </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <integer key="value" value="5"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jS4-Iz-Icq">
                         <rect key="frame" x="116" y="57.5" width="37.5" height="18"/>
@@ -47,13 +60,17 @@
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
+                    <constraint firstItem="BUA-1g-1AQ" firstAttribute="height" secondItem="TZ6-eB-3iy" secondAttribute="height" id="BNw-zF-Thf"/>
                     <constraint firstItem="f5e-cu-O6E" firstAttribute="top" secondItem="Ps9-IO-r7v" secondAttribute="top" id="Bd5-r3-jf7"/>
                     <constraint firstItem="TZ6-eB-3iy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CZB-nz-MXR"/>
+                    <constraint firstItem="BUA-1g-1AQ" firstAttribute="leading" secondItem="TZ6-eB-3iy" secondAttribute="leading" id="KCB-NP-yHc"/>
                     <constraint firstItem="jS4-Iz-Icq" firstAttribute="leading" secondItem="TZ6-eB-3iy" secondAttribute="trailing" constant="8" id="KvS-uR-9nn"/>
                     <constraint firstItem="jS4-Iz-Icq" firstAttribute="top" secondItem="Ps9-IO-r7v" secondAttribute="bottom" constant="8.5" id="QQA-Kb-moX"/>
+                    <constraint firstItem="BUA-1g-1AQ" firstAttribute="top" secondItem="TZ6-eB-3iy" secondAttribute="top" id="XTX-1m-Lwo"/>
                     <constraint firstItem="TZ6-eB-3iy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="aeg-8Q-Cpe"/>
                     <constraint firstAttribute="trailing" secondItem="f5e-cu-O6E" secondAttribute="trailing" constant="8" id="kc7-Ws-drI"/>
                     <constraint firstItem="Ps9-IO-r7v" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="26" id="lei-cj-pM2"/>
+                    <constraint firstItem="BUA-1g-1AQ" firstAttribute="width" secondItem="TZ6-eB-3iy" secondAttribute="width" id="mx4-qt-g2i"/>
                     <constraint firstItem="Ps9-IO-r7v" firstAttribute="leading" secondItem="TZ6-eB-3iy" secondAttribute="trailing" constant="8" id="w6O-2U-MSw"/>
                 </constraints>
             </tableViewCellContentView>
@@ -61,6 +78,7 @@
             <connections>
                 <outlet property="countLbl" destination="jS4-Iz-Icq" id="Gpb-Dd-2S8"/>
                 <outlet property="imgV" destination="TZ6-eB-3iy" id="LlN-xo-Im0"/>
+                <outlet property="imgvBGV" destination="BUA-1g-1AQ" id="TaS-g5-AkU"/>
                 <outlet property="nameLbl" destination="Ps9-IO-r7v" id="vEc-ZN-I5b"/>
                 <outlet property="selectedV" destination="f5e-cu-O6E" id="yPI-mx-4AH"/>
             </connections>
@@ -69,5 +87,6 @@
     </objects>
     <resources>
         <image name="selected" width="100" height="100"/>
+        <image name="tmp" width="200" height="200"/>
     </resources>
 </document>
