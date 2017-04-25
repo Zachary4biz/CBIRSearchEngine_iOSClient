@@ -42,7 +42,16 @@
 NSString *cellID = @"cD";
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor whiteColor];
+    self.view.backgroundColor = [UIColor clearColor];
+    
+    UIVisualEffectView *v = [[UIVisualEffectView alloc]initWithEffect:[UIBlurEffect effectWithStyle:UIBlurEffectStyleLight]];
+    v.frame = self.view.bounds;
+    [self.view insertSubview:v atIndex:0];
+    
+    UIImageView *imgV = [[UIImageView alloc]initWithFrame:self.view.bounds];
+    [imgV setImage:[UIImage imageNamed:@"wallpaper"]];
+    [self.view insertSubview:imgV atIndex:0];
+    
     [self prepareData];
     
     [self prepareTableView];
@@ -59,9 +68,11 @@ NSString *cellID = @"cD";
 - (void)prepareTableView
 {
     self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-20)];
+    self.tableView.backgroundColor = [UIColor clearColor];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.contentInset = UIEdgeInsetsMake(0, 0, 44, 0);
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     [self.view addSubview:self.tableView];
     
     [self.tableView registerNib:[UINib nibWithNibName:@"AlbumTableViewCell" bundle:nil] forCellReuseIdentifier:cellID];

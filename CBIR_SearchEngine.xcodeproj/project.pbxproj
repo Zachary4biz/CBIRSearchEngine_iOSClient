@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11361FFC1EAEFFD400C0590D /* BezierPathFromPaintCode.m in Sources */ = {isa = PBXBuildFile; fileRef = 11361FFB1EAEFFD400C0590D /* BezierPathFromPaintCode.m */; };
 		1143E4651EA9FCF4007D14C4 /* UIImage+ImageName.m in Sources */ = {isa = PBXBuildFile; fileRef = 1143E4641EA9FCF4007D14C4 /* UIImage+ImageName.m */; };
 		11584A461E8801BE003A9034 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 11584A451E8801BE003A9034 /* main.m */; };
 		11584A491E8801BE003A9034 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 11584A481E8801BE003A9034 /* AppDelegate.m */; };
@@ -19,6 +20,8 @@
 		11584A7C1E880A1E003A9034 /* PresentSimilaryImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 11584A7B1E880A1E003A9034 /* PresentSimilaryImageViewController.m */; };
 		11584A811E881556003A9034 /* PresentSimilaryImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 11584A801E881556003A9034 /* PresentSimilaryImageCollectionViewCell.m */; };
 		11584AD81E883DDC003A9034 /* Assets 02-19-52-566.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11584AD71E883DDC003A9034 /* Assets 02-19-52-566.xcassets */; };
+		1179D3191EAEE1EE00A86E1B /* CompactPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1179D3171EAEE1EE00A86E1B /* CompactPhotoViewController.m */; };
+		1179D31A1EAEE1EE00A86E1B /* CompactPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1179D3181EAEE1EE00A86E1B /* CompactPhotoViewController.xib */; };
 		118D03AA1EA2291700DE7FA9 /* MASCompositeConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 118D03711EA2291600DE7FA9 /* MASCompositeConstraint.m */; };
 		118D03AB1EA2291700DE7FA9 /* MASConstraint.m in Sources */ = {isa = PBXBuildFile; fileRef = 118D03741EA2291600DE7FA9 /* MASConstraint.m */; };
 		118D03AC1EA2291700DE7FA9 /* MASConstraintMaker.m in Sources */ = {isa = PBXBuildFile; fileRef = 118D03761EA2291600DE7FA9 /* MASConstraintMaker.m */; };
@@ -71,6 +74,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		11361FFA1EAEFFD400C0590D /* BezierPathFromPaintCode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BezierPathFromPaintCode.h; sourceTree = "<group>"; };
+		11361FFB1EAEFFD400C0590D /* BezierPathFromPaintCode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BezierPathFromPaintCode.m; sourceTree = "<group>"; };
 		1143E4631EA9FCF4007D14C4 /* UIImage+ImageName.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ImageName.h"; sourceTree = "<group>"; };
 		1143E4641EA9FCF4007D14C4 /* UIImage+ImageName.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ImageName.m"; sourceTree = "<group>"; };
 		11584A411E8801BE003A9034 /* CBIR_SearchEngine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CBIR_SearchEngine.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +100,9 @@
 		11584A7F1E881556003A9034 /* PresentSimilaryImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PresentSimilaryImageCollectionViewCell.h; sourceTree = "<group>"; };
 		11584A801E881556003A9034 /* PresentSimilaryImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PresentSimilaryImageCollectionViewCell.m; sourceTree = "<group>"; };
 		11584AD71E883DDC003A9034 /* Assets 02-19-52-566.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets 02-19-52-566.xcassets"; sourceTree = "<group>"; };
+		1179D3161EAEE1EE00A86E1B /* CompactPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CompactPhotoViewController.h; sourceTree = "<group>"; };
+		1179D3171EAEE1EE00A86E1B /* CompactPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CompactPhotoViewController.m; sourceTree = "<group>"; };
+		1179D3181EAEE1EE00A86E1B /* CompactPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CompactPhotoViewController.xib; sourceTree = "<group>"; };
 		118D03701EA2291600DE7FA9 /* MASCompositeConstraint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MASCompositeConstraint.h; sourceTree = "<group>"; };
 		118D03711EA2291600DE7FA9 /* MASCompositeConstraint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MASCompositeConstraint.m; sourceTree = "<group>"; };
 		118D03721EA2291600DE7FA9 /* MASConstraint+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MASConstraint+Private.h"; sourceTree = "<group>"; };
@@ -271,6 +279,8 @@
 		118D036E1EA2291600DE7FA9 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				11361FFA1EAEFFD400C0590D /* BezierPathFromPaintCode.h */,
+				11361FFB1EAEFFD400C0590D /* BezierPathFromPaintCode.m */,
 				11584A771E880331003A9034 /* PostBodyMakerUtil.h */,
 				11584A781E880331003A9034 /* PostBodyMakerUtil.m */,
 				118D036F1EA2291600DE7FA9 /* Masonry */,
@@ -360,13 +370,16 @@
 		118D03C31EA22B3200DE7FA9 /* PhotosVC */ = {
 			isa = PBXGroup;
 			children = (
-				11EC961B1EA8E830007DF170 /* PhotoCollectionView */,
+				11EC961B1EA8E830007DF170 /* ExpandPhotoCollectionView */,
 				11EC96211EA8EC16007DF170 /* Album */,
+				1179D3161EAEE1EE00A86E1B /* CompactPhotoViewController.h */,
+				1179D3171EAEE1EE00A86E1B /* CompactPhotoViewController.m */,
+				1179D3181EAEE1EE00A86E1B /* CompactPhotoViewController.xib */,
 			);
 			path = PhotosVC;
 			sourceTree = "<group>";
 		};
-		11EC961B1EA8E830007DF170 /* PhotoCollectionView */ = {
+		11EC961B1EA8E830007DF170 /* ExpandPhotoCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				118D03C41EA22B7500DE7FA9 /* PhotoViewController.h */,
@@ -375,7 +388,7 @@
 				11EC96151EA8B980007DF170 /* PhotoCollectionViewCell.h */,
 				11EC96161EA8B980007DF170 /* PhotoCollectionViewCell.m */,
 			);
-			name = PhotoCollectionView;
+			name = ExpandPhotoCollectionView;
 			sourceTree = "<group>";
 		};
 		11EC96211EA8EC16007DF170 /* Album */ = {
@@ -506,6 +519,7 @@
 				11584A541E8801BE003A9034 /* LaunchScreen.storyboard in Resources */,
 				11EC96201EA8EC0E007DF170 /* AlbumTableViewCell.xib in Resources */,
 				11584A4F1E8801BE003A9034 /* Main.storyboard in Resources */,
+				1179D31A1EAEE1EE00A86E1B /* CompactPhotoViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -542,6 +556,7 @@
 				118D03B51EA2291700DE7FA9 /* NSData+ImageContentType.m in Sources */,
 				11584A811E881556003A9034 /* PresentSimilaryImageCollectionViewCell.m in Sources */,
 				118D03AF1EA2291700DE7FA9 /* MASViewConstraint.m in Sources */,
+				11361FFC1EAEFFD400C0590D /* BezierPathFromPaintCode.m in Sources */,
 				118D03B81EA2291700DE7FA9 /* SDWebImageDecoder.m in Sources */,
 				118D03AD1EA2291700DE7FA9 /* MASLayoutConstraint.m in Sources */,
 				118D03C21EA2291700DE7FA9 /* UIView+WebCacheOperation.m in Sources */,
@@ -551,6 +566,7 @@
 				11584A791E880331003A9034 /* PostBodyMakerUtil.m in Sources */,
 				118D03B21EA2291700DE7FA9 /* View+MASAdditions.m in Sources */,
 				118D03AA1EA2291700DE7FA9 /* MASCompositeConstraint.m in Sources */,
+				1179D3191EAEE1EE00A86E1B /* CompactPhotoViewController.m in Sources */,
 				118D03B11EA2291700DE7FA9 /* NSLayoutConstraint+MASDebugAdditions.m in Sources */,
 				118D03B91EA2291700DE7FA9 /* SDWebImageDownloader.m in Sources */,
 				118D03BC1EA2291700DE7FA9 /* SDWebImagePrefetcher.m in Sources */,
@@ -720,6 +736,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Zac.CBIR-SearchEngine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -732,6 +749,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "Zac.CBIR-SearchEngine";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

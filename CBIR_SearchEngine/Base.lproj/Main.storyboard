@@ -21,15 +21,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="searchTrigger" translatesAutoresizingMaskIntoConstraints="NO" id="eAY-AY-EEX">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="wallpaper" translatesAutoresizingMaskIntoConstraints="NO" id="sK7-kx-8LB">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_shadow" translatesAutoresizingMaskIntoConstraints="NO" id="eAY-AY-EEX">
                                 <rect key="frame" x="138" y="284" width="100" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="Vwp-Cx-s2M"/>
                                     <constraint firstAttribute="height" constant="100" id="Ypw-Xa-IU4"/>
                                 </constraints>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozD-FQ-3Jh">
-                                <rect key="frame" x="8" y="667" width="359" height="300"/>
+                            <view alpha="0.96999999999999997" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ozD-FQ-3Jh">
+                                <rect key="frame" x="8" y="675" width="359" height="300"/>
                                 <subviews>
                                     <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="search" translatesAutoresizingMaskIntoConstraints="NO" id="2TG-xz-lfi">
                                         <rect key="frame" x="50" y="30" width="80" height="80"/>
@@ -66,7 +69,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="JIt-69-0LB" firstAttribute="top" secondItem="ozD-FQ-3Jh" secondAttribute="top" constant="30" id="4iT-Yn-NAO"/>
                                     <constraint firstAttribute="height" constant="300" id="G5Y-OJ-XUg"/>
@@ -92,10 +95,14 @@
                             <constraint firstItem="eAY-AY-EEX" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3VV-2B-L6l"/>
                             <constraint firstItem="ozD-FQ-3Jh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="8" id="IOc-D5-hyC"/>
                             <constraint firstAttribute="trailing" secondItem="ozD-FQ-3Jh" secondAttribute="trailing" constant="8" id="Lhf-O0-WiL"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ozD-FQ-3Jh" secondAttribute="bottom" constant="-300" id="MiZ-t1-OkE"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="ozD-FQ-3Jh" secondAttribute="bottom" constant="-308" id="MiZ-t1-OkE"/>
+                            <constraint firstItem="sK7-kx-8LB" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="fEe-V3-WZz"/>
                             <constraint firstItem="YnE-fu-EhY" firstAttribute="centerX" secondItem="eAY-AY-EEX" secondAttribute="centerX" id="hi2-wQ-oLQ"/>
+                            <constraint firstItem="sK7-kx-8LB" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="hoJ-cH-EDX"/>
                             <constraint firstItem="YnE-fu-EhY" firstAttribute="top" secondItem="eAY-AY-EEX" secondAttribute="bottom" constant="62" id="waU-f8-QGX"/>
+                            <constraint firstAttribute="bottom" secondItem="sK7-kx-8LB" secondAttribute="bottom" id="x4U-PF-bRp"/>
                             <constraint firstItem="eAY-AY-EEX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xj2-Zh-XI0"/>
+                            <constraint firstAttribute="trailing" secondItem="sK7-kx-8LB" secondAttribute="trailing" id="ys9-vf-4HX"/>
                         </constraints>
                     </view>
                     <connections>
@@ -112,8 +119,9 @@
         </scene>
     </scenes>
     <resources>
+        <image name="logo_shadow" width="988" height="883"/>
         <image name="search" width="783" height="783"/>
-        <image name="searchTrigger" width="512" height="512"/>
         <image name="upload" width="528" height="528"/>
+        <image name="wallpaper" width="414" height="683"/>
     </resources>
 </document>

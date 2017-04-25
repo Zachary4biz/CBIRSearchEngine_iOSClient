@@ -45,6 +45,7 @@
                         </constraints>
                     </imageView>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <constraints>
                     <constraint firstItem="f5e-cu-O6E" firstAttribute="top" secondItem="Ps9-IO-r7v" secondAttribute="top" id="Bd5-r3-jf7"/>
                     <constraint firstItem="TZ6-eB-3iy" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="CZB-nz-MXR"/>
@@ -56,6 +57,7 @@
                     <constraint firstItem="Ps9-IO-r7v" firstAttribute="leading" secondItem="TZ6-eB-3iy" secondAttribute="trailing" constant="8" id="w6O-2U-MSw"/>
                 </constraints>
             </tableViewCellContentView>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <connections>
                 <outlet property="countLbl" destination="jS4-Iz-Icq" id="Gpb-Dd-2S8"/>
                 <outlet property="imgV" destination="TZ6-eB-3iy" id="LlN-xo-Im0"/>
