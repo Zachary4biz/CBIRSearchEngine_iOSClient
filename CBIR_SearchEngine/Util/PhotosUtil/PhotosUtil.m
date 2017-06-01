@@ -103,7 +103,7 @@ PHAssetCollection *const ZTAllAlbum;
     
     //2、判断是获取所有还是某一个相册的图片
     PHFetchResult *result;
-    if (assetCollection == ZTAllAlbum) {
+    if (assetCollection == ZTAllAlbum||assetCollection == NULL) {
         //给的参数是ZTAllAlbum，意味着获取所有相册的资源
         result = [PHAsset fetchAssetsWithMediaType:PHAssetMediaTypeImage options:option];
     }else{

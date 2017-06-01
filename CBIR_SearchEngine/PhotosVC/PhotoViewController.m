@@ -278,6 +278,7 @@ static NSString *const cellID = @"cellID";
 {
     return UIEdgeInsetsMake(15, 8, 0, 8);
 }
+
 #pragma mark - UIScrollViewDelegate
 static CGFloat lastOffset = 0;
 static BOOL direction = NO;//NO是上，YES是下

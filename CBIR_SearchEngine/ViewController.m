@@ -46,8 +46,9 @@
 
 @end
 
-static NSString *serverStr = @"http://192.168.221.54:5000/";
-//static NSString *serverStr = @"http://0.0.0.0:5000/";
+//static NSString *serverStr = @"http://192.168.221.54:5000/";
+static NSString *serverStr = @"http://0.0.0.0:5000/";
+//static NSString *serverStr = @"http://127.0.0.0.0:5000/";
 
 @implementation ViewController
 #pragma mark - lazy
@@ -433,7 +434,7 @@ BOOL isPanGesAnimating;
     //4、先缩小后放大的实现，使用帧动画
     CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"bounds"];
     //一秒后开始动画
-    //    anim.beginTime = CACurrentMediaTime() + 1;
+//    anim.beginTime = CACurrentMediaTime() + 1;
     anim.duration = 0.8;
     anim.keyTimes = @[@0,@0.4,@0.8];
     anim.values = @[[NSValue valueWithCGRect:CGRectMake(0, 0, 100, 100)],

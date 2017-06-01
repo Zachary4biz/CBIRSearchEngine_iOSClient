@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CustomCameraViewController">
+            <connections>
+                <outlet property="cameraImageView" destination="QkW-xh-cny" id="CA0-nS-cyi"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QkW-xh-cny">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                </imageView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5h4-aa-7aC">
+                    <rect key="frame" x="160" y="592" width="55" height="55"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="55" id="0vX-i3-oH8"/>
+                        <constraint firstAttribute="height" constant="55" id="cpw-P6-hey"/>
+                    </constraints>
+                    <state key="normal" image="APUS_Logo"/>
+                    <connections>
+                        <action selector="btn:" destination="-1" eventType="touchUpInside" id="kkX-I3-DuY"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="QkW-xh-cny" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="7B5-cJ-qgs"/>
+                <constraint firstItem="5h4-aa-7aC" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Gfj-6e-8gb"/>
+                <constraint firstAttribute="bottom" secondItem="5h4-aa-7aC" secondAttribute="bottom" constant="20" id="HIK-3J-Vlq"/>
+                <constraint firstAttribute="bottom" secondItem="QkW-xh-cny" secondAttribute="bottom" id="Lx4-zW-Vv3"/>
+                <constraint firstAttribute="trailing" secondItem="QkW-xh-cny" secondAttribute="trailing" id="Voo-et-14p"/>
+                <constraint firstItem="QkW-xh-cny" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="d33-ev-jQb"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="70.5" y="85.5"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="APUS_Logo" width="1024" height="1024"/>
+    </resources>
+</document>
